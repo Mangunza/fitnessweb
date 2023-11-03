@@ -38,7 +38,7 @@
         <header id="header" class="fixed-top ">
             <div class="container d-flex align-items-center justify-content-lg-between">
 
-                <h1 class="logo me-auto me-lg-0"><a href="/">Fitness | FitWeb<span>.</span></a></h1>
+                <h1 class="logo me-auto me-lg-0"><a href="/">Fitness | Fit-WEB<span>.</span></a></h1>
 
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
@@ -47,7 +47,7 @@
                         <li><a class="nav-link scrollto" href="/services">Serviços</a></li>
                         <li><a class="nav-link scrollto " href="/gallery">Galeria</a></li>
                         <li><a class="nav-link scrollto" href="#team">Contactos</a></li>
-                        <li class="dropdown"><a href="#"><span>Cadastrar</span> <i class="bi bi-chevron-down"></i></a>
+                        <li class="dropdown"><a href="#"><span>Menu</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
                                 <li><a href="#">Inscreva-se</a></li>
                                 <li><a href="#">Treinos</a></li>
@@ -55,13 +55,22 @@
                                 <li><a href="#">Ver Perfil</a></li>
                             </ul>
                         </li>
-                        <li><a class="nav-link scrollto" href="/signin">Signin</a></li>
+
+                        {% if not request.user.is_authenticated %}
+
+                        <li><a class="nav-link scrollto" href="/signup">Entrar</a></li>
+
+                        {% else %}
+                        <li><a class="nav-link scrollto" href="/logout">Sair</a></li>
+                        {% endif %}
+
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
 
-                <a href="/achivements" class="get-started-btn scrollto">FitWeb</a>
-
+                {% if not request.user.is_authenticated %}
+                <a href="/" class="get-started-btn scrollto">Bem-Vindo!</a>
+                {% endif %}
             </div>
         </header><!-- End Header -->
 
@@ -325,7 +334,9 @@
                                 <div class="address">
                                     <i class="bi bi-geo-alt"></i>
                                     <h4>Location:</h4>
-                                    <p>A108 Adam Street, New York, NY 535022</p>
+                                    <p>R. Augusta
+                                        Luanda, Angola
+                                        -8.841038, 13.212634</p>
                                 </div>
 
                                 <div class="email">
@@ -392,8 +403,9 @@
                             <div class="footer-info">
                                 <h3>Gp<span>.</span></h3>
                                 <p>
-                                    A108 Adam Street <br>
-                                    NY 535022, USA<br><br>
+                                    R. Augusta
+                                    Luanda, Angola <br>
+                                    -8.841038, 13.212634<br><br>
                                     <strong>Phone:</strong> +1 5589 55488 55<br>
                                     <strong>Email:</strong> info@example.com<br>
                                 </p>
