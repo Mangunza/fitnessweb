@@ -106,7 +106,11 @@ def enroll(request):
         reference = request.POST.get('reference')
         address = request.POST.get('address')
         query = Enrollment(fullName=fullName, email=email, gender=gender, phoneNumber=phoneNumber,
+<<<<<<< HEAD
                            dob=dob, selectMembershipPlan=member, selectTrainer=trainer, reference=reference, address=address)
+=======
+                           dob=dob, member=member, trainer=trainer, reference=reference, address=address)
+>>>>>>> 3ca2b9637d93384cf64c84fb6734c764ae1655d0
         query.save()
         messages.success(request, " Matrícula bem sucedida!")
         return redirect('/join')
