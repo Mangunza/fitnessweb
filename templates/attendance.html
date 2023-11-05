@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}
+Presenças
+{% endblock title %}
+{% block head %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h2>Gerencia de Presenças</h2>
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <strong></strong> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+
+            {% comment %} Contact Code {% endcomment %}
+
+            <form action="/attendance" method="post"> {% csrf_token %}
+                {% csrf_token %}
+                <div>
+                    <div class="form-group">
+                        <input type="number" class="form-control mt-2" value="{{user.username}}" name="phoneNumber"
+                            placeholder="Digite telefone" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control mt-2" name="workout" id="workout" required>
+                            <option selected>Treinos</option>
+                            <option value="Ginastica">Ginastica</option>
+                            <option value="Perna">Perna</option>
+                            <option value="Bíspes">Bíspes</option>
+                            <option value="Peito">Peito</option>
+                            <option value="Ombro">Ombros</option>
+                            <option value="Costas">Costas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="logintime" class="text-white">Começa:</label>
+                        <input type="time" id="logintime" class="form-control mt-2" name="logintime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginout" class="text-white">Termina:</label>
+                        <input type="time" id="loginout" class="form-control mt-2" name="loginout" required>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control mt-2" name="trainer" id="trainer" required>
+                            <option selected>Personal Trainner</option>
+                            {% for treinador in selectTrainer %}
+                            <option value="{{treinador.name}}">{{treinador.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-warning" type="submit">Confirmar</button>
+                </div>
+            </form>
+
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+{% endblock head %}

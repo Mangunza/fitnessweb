@@ -2,12 +2,51 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import Contact, MembershipPlan, Trainer, Enrollment
+from .models import Contact, MembershipPlan, Trainer, Enrollment, Gallery, Attendence
 # Create your views here.
 
 
 def Home(request):
     return render(request, "index.html")
+
+
+def attendance(request):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Por favor, é necessario fazer o Login")
+        return redirect('/login')
+    selectTrainer = Trainer.objects.all()
+    context = {"selectTrainer": selectTrainer, }
+    if request.method == "POST":
+        phoneNumber = request.POST.get('phoneNumber')
+        logar = request.POST.get('logintime')
+        deslogar = request.POST.get('loginout')
+        select_workout = request.POST.get('workout')
+        trainer_by = request.POST.get('trainer')
+        query = Attendence(phoneNumber=phoneNumber, logar=logar, deslogar=deslogar,
+                           select_workout=select_workout, trainer_by=trainer_by)
+        query.save()
+        messages.warning(request, "Presença confirmada com sucesso!")
+        return redirect('/attendance')
+
+    return render(request, "attendance.html", context)
+
+
+def gallery(request):
+    posts = Gallery.objects.all()
+    context = {"posts": posts}
+    print(posts)
+    return render(request, "gallery.html", context)
+
+
+def profile(request):
+    if not request.user.is_authenticated:
+        messages.warning(request, "Por favor, é necessario fazer o Login")
+        return redirect('/login')
+    user_phone = request.user
+    posts = Enrollment.objects.filter(phoneNumber=user_phone)
+    print(posts)
+    context = {"posts": posts}
+    return render(request, "profile.html", context)
 
 
 def signup(request):
@@ -106,11 +145,7 @@ def enroll(request):
         reference = request.POST.get('reference')
         address = request.POST.get('address')
         query = Enrollment(fullName=fullName, email=email, gender=gender, phoneNumber=phoneNumber,
-<<<<<<< HEAD
                            dob=dob, selectMembershipPlan=member, selectTrainer=trainer, reference=reference, address=address)
-=======
-                           dob=dob, member=member, trainer=trainer, reference=reference, address=address)
->>>>>>> 3ca2b9637d93384cf64c84fb6734c764ae1655d0
         query.save()
         messages.success(request, " Matrícula bem sucedida!")
         return redirect('/join')
