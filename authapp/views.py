@@ -44,8 +44,9 @@ def profile(request):
         return redirect('/login')
     user_phone = request.user
     posts = Enrollment.objects.filter(phoneNumber=user_phone)
+    attendance = Attendence.objects.filter(phoneNumber=user_phone)
     print(posts)
-    context = {"posts": posts}
+    context = {"posts": posts, "attendance": attendance}
     return render(request, "profile.html", context)
 
 
@@ -114,10 +115,10 @@ def contact(request):
     if request.method == "POST":
         name = request.POST.get('fullName')
         email = request.POST.get('email')
-        number = request.POST.get('num')
+        number = request.POST.get('phoneNumber')
         desc = request.POST.get('desc')
         myquery = Contact(name=name, email=email,
-                          phonenumber=number, description=desc)
+                          phoneNumber=number, description=desc)
         myquery.save()
 
         messages.info(request, "Thanks for Contacting us we will get you soon")

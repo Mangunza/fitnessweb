@@ -8,14 +8,14 @@ Matriculas
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <h3>Ficha de Matricula!</h3>
+
             {% for message in messages %}
             <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                 <strong></strong> {{ message }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             {% endfor %}
-
+            <h2>Ficha de Matricula!</h2>
             {% comment %} Contact Code {% endcomment %}
 
             <form action="/join" method="post"> {% csrf_token %}
